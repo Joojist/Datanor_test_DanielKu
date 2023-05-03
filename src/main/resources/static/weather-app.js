@@ -1,4 +1,3 @@
-// Get DOM elements
 const addCityButton = document.querySelector("#add-button");
 const savedCitySelect = document.querySelector("#saved-city-select");
 const savedWeatherButton = document.querySelector("#saved-button");
@@ -6,7 +5,7 @@ const deleteCitySelect = document.querySelector("#delete-city-select");
 const deleteCityButton = document.querySelector("#delete-button");
 const savedDataDiv = document.querySelector("#saved-data");
 
-// Add event listeners
+//event listeners
 addCityButton.addEventListener("click", addCity);
 savedWeatherButton.addEventListener("click", getSavedWeatherData);
 deleteCityButton.addEventListener("click", deleteCity);
@@ -17,7 +16,6 @@ populateSavedCitySelect();
 // Populate the delete city select dropdown on page load
 populateDeleteCitySelect();
 
-// Function to add a city to the database
 function addCity() {
     const newCityInput = document.querySelector("#new-city");
     const newCity = newCityInput.value.trim();
@@ -42,7 +40,7 @@ function addCity() {
         });
     }
 
-// Function to get saved weather data for a selected city
+
 function getSavedWeatherData() {
     const savedCitySelect = document.getElementById("saved-city-select");
     const selectedCity = savedCitySelect.options[savedCitySelect.selectedIndex].value;
@@ -104,7 +102,6 @@ function getEmoji(temperature) {
     }
 }
 
-// Function to delete a city from the database
 function deleteCity() {
     const deleteCitySelect = document.getElementById("delete-city-select");
     const selectedCity = deleteCitySelect.options[deleteCitySelect.selectedIndex].value;
@@ -130,7 +127,6 @@ function deleteCity() {
         });
 }
 
-// Function to populate the saved city select dropdown
 function populateSavedCitySelect() {
     fetch("/cities", {
         method: "GET"
@@ -148,12 +144,9 @@ function populateSavedCitySelect() {
         });
 }
 
-// Function to populate the delete city select dropdown
-// Make a fetch request to the server to get the list of saved cities
 fetch('/cities')
     .then(response => response.json())
     .then(cities => {
-        // Loop through the list of cities and create an option element for each one
         Array.from(cities).forEach(city => {
             const option = document.createElement('option');
             option.value = city;
@@ -164,7 +157,6 @@ fetch('/cities')
     })
     .catch(error => console.error(error));
 
-// Function to populate the deleteCitySelect dropdown with cities from the database
 function populateDeleteCitySelect() {
     fetch("/cities", {
         method: "GET"

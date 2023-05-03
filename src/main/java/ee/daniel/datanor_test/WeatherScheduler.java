@@ -24,7 +24,6 @@ public class WeatherScheduler {
     }
 
     public void scheduleWeatherChecks() {
-        // initial unique city check
         List<String> allCities = weatherRepository.findAllCities();
         for (String city : allCities) {
             String formattedCity = formatCityName(city);
@@ -41,16 +40,16 @@ public class WeatherScheduler {
     private void performWeatherChecks() {
         // all unique + new cities
         List<String> allCities = weatherRepository.findAllCities();
-        boolean newCityAdded = false; // add flag to track new city
+        boolean newCityAdded = false;
         for (String city : allCities) {
             String formattedCity = formatCityName(city);
             if (!cities.contains(formattedCity)) {
                 cities.add(formattedCity);
-                newCityAdded = true; // set flag to true if new city added
+                newCityAdded = true;
                 checkWeather(formattedCity);
             }
         }
-        if (!newCityAdded) { // perform checkup for all unique cities if no new city added
+        if (!newCityAdded) { // perform checkup for all unique cities
             for (String city : allCities) {
                 String formattedCity = formatCityName(city);
                 if (!cities.contains(formattedCity)) {
@@ -68,7 +67,7 @@ public class WeatherScheduler {
         }
         JSONObject json = new JSONObject(weatherData);
         double temperatureInKelvin = json.getJSONObject("main").getDouble("temp");
-        Double temperatureInCelsius = temperatureInKelvin - 273.15; // Kelvin to Celsius
+        Double temperatureInCelsius = temperatureInKelvin - 273.15; // kelvin to celsius
         DecimalFormat df = new DecimalFormat("#.#");
         Double formattedTemperature = Double.valueOf(df.format(temperatureInCelsius));
         Double humidity = json.getJSONObject("main").getDouble("humidity");
